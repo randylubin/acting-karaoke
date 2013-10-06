@@ -51,15 +51,15 @@
 				No Character Selected
 			</div>
 			<div ng-show="playerData.charID != null">
-				<div ng-show="script[sceneSync.currentLine].charID == playerData.charID"> {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].line}} </div>
-				<div ng-show="script[sceneSync.currentLine].charID != playerData.charID"> (Other player's line) </div>
+				<div ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID == playerData.charID"> {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].line}} </div>
+				<div ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID != playerData.charID"> (Other player's line) </div>
 			</div>
 		</div>
 
 		<!-- Right -->
 		<div ng-show="playerData.charID != null">
 			<div class="col-xs-2">
-				<button ng-click="nextLine()" ng-disabled="sceneSync.currentLine >= script.length - 1">Next Line</button>
+				<button ng-click="nextLine()" ng-disabled="sceneSync.currentLine >= sceneLibrary[sceneSync.currentScene].script.length - 1">Next Line</button>
 				<button ng-click="restartScene()" ng-disabled="sceneSync.currentLine == 0">Restart</button>
 			</div>
 		</div>
