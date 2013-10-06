@@ -226,7 +226,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 		// Since we use this twice we put it here
 		function setRoom(name) {
 			angular.element('#createRoom').hide();
-			angular.element('#title').text(name);
+			angular.element('#title').hide();
 			angular.element('#subTitle').text('Link to join: ' + location.href);
 			angular.element('body').addClass('active');
 		}
