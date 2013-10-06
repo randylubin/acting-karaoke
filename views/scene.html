@@ -1,0 +1,55 @@
+<div tabindex="0" ui-keyup="{'enter':'hitKey($event)'}">
+	<div class="row prompter">
+		<div class="col-xs-2">
+			<div ng-show="playerData.charID != null">
+				Your lines:
+			</div>
+		</div>
+		<div class="text-center col-xs-8">
+			<div ng-hide="playerData.charID != null">
+				{{playerData.message.center}}
+			</div>
+			<div ng-show="playerData.charID != null">
+				<div ng-show="script[sceneSync.currentLine].charID == playerData.charID"> {{script[sceneSync.currentLine].line}} </div>
+			</div>
+		</div>
+		<div ng-show="playerData.charID != null">
+			<div class="col-xs-2">
+				<button ng-click="nextLine()" ng-disabled="sceneSync.currentLine >= script.length - 1">Next Line</button>
+				<button ng-click="restartScene()" ng-disabled="sceneSync.currentLine == 0">Restart</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-xs-3">
+			<video id="localVideo" style="height: 150px;"></video>
+		</div>
+    	<div id="remotes" class="col-xs-3"></div>
+    </div>
+
+
+	<div class="row">
+		Available characters:	
+	</div>
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div ng-repeat="character in sceneSync.availableCharacters">
+			<button class="col-xs-2" ng-click="pickCharacter(character)" ng-disabled="playerData.charID == character.charID">{{character.name}}</button>
+		</div>
+		<button class="col-xs-2" ng-click="clearCharacter()" ng-disabled="playerData.charID == null">None</button>
+	</div>
+
+	<div style="height:100px;"></div>
+
+	<button ng-click="nextLine()" ng-disabled="sceneSync.currentLine >= script.length - 1">Next Line</button>
+	<button ng-click="restartScene()" ng-disabled="sceneSync.currentLine == 0">Restart</button>
+
+	<div ng-repeat="player in sceneInfo.players">
+			<div class="row" ng-class="{true:'playerLine', false:''}[playerData.charID ==player.charID]">
+				<div class="col-xs-2"> {{player.name}} : </div>
+				<div ng-show="script[sceneSync.currentLine].charID == player.charID" class="col-xs-5"> {{script[sceneSync.currentLine].line}} </div>
+			</div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+body {
+	background-color: #66A3D2;
+	color: #FFCD00;
+	font-size: 2em;
+	padding-top: 15px;
+}
+
+a:link {color:#FFF3C2;} /*a normal, unvisited link*/
+a:visited {color:#FFF3C2;}  /* visited link */
+a:hover {color:#FFF3C2;text-decoration:underline;} /*a link when the user mouses over it*/
+a:active {color:#FFF3C2;text-decoration:underline;} /*a link the moment it is clicked*/
+
+.playerLine {
+	color:whitesmoke;
+}
+
+.ng-hide {
+  
+	display:block!important;
+
+	position:absolute;
+	top:-9999px;
+	left:-9999px;
+}
+
+#remotes video {
+	height: 150px;
+}
