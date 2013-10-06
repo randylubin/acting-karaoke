@@ -1,18 +1,56 @@
 <div tabindex="0" ui-keyup="{'enter':'hitKey($event)'}">
+	
+	
+	<div class="row">
+		<div class="col-xs-3 pull-right">
+			<div class="row">
+				<div class="pull-right">
+					<div class="text-center">Available Characters:</div>
+				</div>
+			</div>
+			<div class="row">
+				<button class="pull-right" ng-click="clearCharacter()" ng-disabled="playerData.charID == null">None</button>
+				<div ng-repeat="character in sceneLibrary[sceneSync.currentScene].availableCharacters">
+					<button class="pull-right" ng-click="pickCharacter(character)" ng-disabled="playerData.charID == character.charID">{{character.name}}</button>
+				</div>		
+			</div>
+		</div>
+
+		<div class="col-xs-2 pull-right">
+			<div class="row">
+				<div class="pull-right">
+					<div class="text-center">Available Scenes:</div>
+				</div>
+			</div>
+			<div class="row">
+				<div ng-repeat="scene in sceneLibrary">
+					<button class="pull-right" ng-click="pickScene(scene.sceneID)" ng-disabled="scene.sceneID == sceneSync.currentScene">{{scene.name}}</button>	
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="row prompter">
+		
+		<!-- Left -->
 		<div class="col-xs-2">
 			<div ng-show="playerData.charID != null">
 				Your lines:
 			</div>
 		</div>
+
+		<!-- Center -->
 		<div class="text-center col-xs-8">
 			<div ng-hide="playerData.charID != null">
-				{{playerData.message.center}}
+				No Character Selected
 			</div>
 			<div ng-show="playerData.charID != null">
-				<div ng-show="script[sceneSync.currentLine].charID == playerData.charID"> {{script[sceneSync.currentLine].line}} </div>
+				<div ng-show="script[sceneSync.currentLine].charID == playerData.charID"> {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].line}} </div>
+				<div ng-show="script[sceneSync.currentLine].charID != playerData.charID"> (Other player's line) </div>
 			</div>
 		</div>
+
+		<!-- Right -->
 		<div ng-show="playerData.charID != null">
 			<div class="col-xs-2">
 				<button ng-click="nextLine()" ng-disabled="sceneSync.currentLine >= script.length - 1">Next Line</button>
@@ -22,13 +60,12 @@
 	</div>
 
 
-	<div class="row">
-		<div class="col-xs-3">
-			<video id="localVideo" style="height: 150px;"></video>
+	<div class="row videoTray">
+		<div class="col-xs-6">
+			<video id="localVideo"></video>
 		</div>
-    	<div id="remotes" class="col-xs-3"></div>
+    	<div id="remotes" class="col-xs-6"></div>
     </div>
-
 
 	<div class="row">
 		Available characters:	
