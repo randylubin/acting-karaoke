@@ -66,6 +66,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 		$scope.pickScene = function(sceneID){
 			$scope.sceneSync.currentLine = 0;
 			$scope.sceneSync.currentScene = sceneID;
+			console.log('New scene:', $scope.sceneLibrary[sceneID].name);
 		};
 
 		$scope.pickCharacter = function(character){
@@ -141,8 +142,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 		];
 
 		$scope.whosOnFirst.script = [
-			{charID: 0, line: 'I love baseball. When we get to St. Louis, will you tell me the guys\' names on the team'},
-			{charID: 0, line: 'so when I go to see them in that St. Louis ballpark I\'ll be able to know those fellows'},
+			{charID: 0, line: 'I love baseball. When we get to St. Louis, will you tell me the guys\' names on the team so when I go to see them in that St. Louis ballpark I\'ll be able to know those fellows?'},
 			{charID: 1, line: 'All right. But you know, strange as it may seem, they give ball players nowaday'},
 			{charID: 1, line: 'very peculiar names'},
 			{charID: 0, line: 'Funny names'},
@@ -201,9 +201,54 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 			{sceneID: 1, name: 'Who\'s on First', availableCharacters: $scope.whosOnFirst.availableCharacters, script: $scope.whosOnFirst.script}
 		];
 
+		// grab the room from the URL
+		var room = location.search && location.search.split('?')[1];
+
+		// create our webrtc connection
+		var webrtc = new SimpleWebRTC({
+			// the id/element dom element that will hold "our" video
+			localVideoEl: 'localVideo',
+			// the id/element dom element that will hold remote videos
+			remoteVideosEl: 'remotes',
+			// immediately ask for camera access
+			autoRequestMedia: true,
+			debug: true,
+			detectSpeakingEvents: true,
+			autoAdjustMic: false
+		});
+
+		// when it's ready, join if we got a room from the URL
+		webrtc.on('readyToCall', function () {
+			// you can name it anything
+			if (room) webrtc.joinRoom(room);
+		});
+
+		// Since we use this twice we put it here
+		function setRoom(name) {
+			angular.element('#createRoom').hide();
+			angular.element('#title').text(name);
+			angular.element('#subTitle').text('Link to join: ' + location.href);
+			angular.element('body').addClass('active');
+		}
+
+		if (room) {
+			setRoom(room);
+		} else {
+			angular.element('form').submit(function () {
+				var val = angular.element('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
+				webrtc.createRoom(val, function (err, name) {
+					console.log(' create room cb', arguments);
+				
+					var newUrl = location.pathname + '?' + name;
+					if (!err) {
+						history.replaceState({foo: 'bar'}, null, newUrl);
+						setRoom(name);
+					} else {
+						console.log(err);
+					}
+				});
+				return false;
+			});
+		}
 	}
 ]);
-
-
-
-
