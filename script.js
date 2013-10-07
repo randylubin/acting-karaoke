@@ -260,6 +260,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 						console.log(err);
 					}
 				});
+				location.reload();
 				return false;
 			});
 		}
