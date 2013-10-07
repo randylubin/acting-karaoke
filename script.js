@@ -4,20 +4,15 @@ url = 'https://actor-karaoke.firebaseio.com/';
 // Angular
 actorKaraoke = angular.module('actorKaraoke', ['firebase', 'ui.keypress']).
 	value('fbURL', url).
-	/*factory('JamInfo', function(angularFireCollection, fbURL) {
-		return angularFireCollection(fbURL);
-	}).*/
-	/*config(function($httpProvider){
-		delete $httpProvider.defaults.headers.common['X-Requested-With'];
-	}).*/
 	config(function($routeProvider) {
 		$routeProvider.
-			when('/', {controller:'SceneCtrl', templateUrl:'views/scene.html'}).
+			when('/', {controller:'HomePageCtrl', templateUrl:'views/homePage.html'}).
+			when('/:room', {controller:'SceneCtrl', templateUrl:'views/scene.html'}).
 			otherwise({redirectTo:'/'});
 	});
 
-actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
-	function SyncCtrl($scope, angularFire){
+actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
+	function SyncCtrl($scope, $routeParams, angularFire){
 
 		$scope.pulpFiction = {};
 		$scope.whosOnFirst = {};
@@ -108,7 +103,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 
 
 
-		var url = 'https://actor-karaoke.firebaseio.com/';
+		var url = 'https://actor-karaoke.firebaseio.com/' + $routeParams.room;
 		var promise = angularFire(url, $scope, 'sceneSync', {});
 
 		// upon angularFire response:
@@ -213,7 +208,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 		var videoKey = '8675309';
 
 		// grab the room from the URL
-		var room = location.search && location.search.split('?')[1];
+		var room = $routeParams.room;
 
 		// create our webrtc connection
 		var webrtc = new SimpleWebRTC({
@@ -244,10 +239,8 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 
 		if (room) {
 			setRoom(room);
-			$scope.$apply($scope.inRoom = true);
 		} else {
 			angular.element('form').submit(function () {
-				$scope.$apply($scope.inRoom = true);
 				var val = angular.element('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
 				webrtc.createRoom(val, function (err, name) {
 					console.log(' create room cb', arguments);
@@ -256,7 +249,6 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 					if (!err) {
 						history.replaceState({foo: 'bar'}, null, newUrl);
 						setRoom(name);
-						location.reload();
 					} else {
 						console.log(err);
 					}
@@ -264,5 +256,15 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 				return false;
 			});
 		}
+	}
+]);
+
+actorKaraoke.controller('HomePageCtrl', ['$scope', 'angularFire',
+	function SyncCtrl($scope, angularFire){
+		angular.element('form').submit(function () {
+			var val = angular.element('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
+			var newUrl = location.pathname + '#/' + val;
+			window.location = newUrl;
+		});
 	}
 ]);
