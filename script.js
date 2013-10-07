@@ -201,6 +201,11 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 			{sceneID: 1, name: 'Who\'s on First', availableCharacters: $scope.whosOnFirst.availableCharacters, script: $scope.whosOnFirst.script}
 		];
 
+
+		// WEBRTC SECTION
+
+		var videoKey = '8675309';
+
 		// grab the room from the URL
 		var room = location.search && location.search.split('?')[1];
 
@@ -220,7 +225,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 		// when it's ready, join if we got a room from the URL
 		webrtc.on('readyToCall', function () {
 			// you can name it anything
-			if (room) webrtc.joinRoom(room);
+			if (room) webrtc.joinRoom(room + videoKey);
 		});
 
 		// Since we use this twice we put it here
