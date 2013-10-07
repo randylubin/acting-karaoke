@@ -256,11 +256,11 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 					if (!err) {
 						history.replaceState({foo: 'bar'}, null, newUrl);
 						setRoom(name);
+						location.reload();
 					} else {
 						console.log(err);
 					}
 				});
-				location.reload();
 				return false;
 			});
 		}
