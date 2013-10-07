@@ -22,6 +22,8 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 		$scope.pulpFiction = {};
 		$scope.whosOnFirst = {};
 
+		$scope.fin = false;
+
 		$scope.playerData = {
 			charID: null,
 			message: {
@@ -86,7 +88,11 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 			console.log('next line');
 
 			//increment line number
-			$scope.sceneSync.currentLine += 1;
+			if (($scope.sceneSync.currentLine + 1) < $scope.sceneLibrary[$scope.sceneSync.currentScene].script.length) {
+				$scope.sceneSync.currentLine += 1;
+			} else {
+				$scope.fin = true;
+			}
 
 		};
 
@@ -97,6 +103,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 
 		$scope.restartScene = function(){
 			$scope.sceneSync.currentLine = 0;
+			$scope.fin = false;
 		};
 
 
@@ -196,8 +203,8 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 		];
 
 		$scope.sceneLibrary = [
-			{sceneID: 0, name: 'Le Big Mac', availableCharacters: $scope.pulpFiction.availableCharacters, script: $scope.pulpFiction.script},
-			{sceneID: 1, name: 'Who\'s on First', availableCharacters: $scope.whosOnFirst.availableCharacters, script: $scope.whosOnFirst.script}
+			{sceneID: 0, name: 'Who\'s on First', availableCharacters: $scope.whosOnFirst.availableCharacters, script: $scope.whosOnFirst.script},
+			{sceneID: 1, name: 'Pulp Fiction', availableCharacters: $scope.pulpFiction.availableCharacters, script: $scope.pulpFiction.script}
 		];
 
 
@@ -237,8 +244,10 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 
 		if (room) {
 			setRoom(room);
+			$scope.$apply($scope.inRoom = true);
 		} else {
 			angular.element('form').submit(function () {
+				$scope.$apply($scope.inRoom = true);
 				var val = angular.element('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
 				webrtc.createRoom(val, function (err, name) {
 					console.log(' create room cb', arguments);

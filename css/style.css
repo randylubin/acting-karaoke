@@ -1,19 +1,26 @@
 body {
-	background-color: beige;
-	color: black; /* #FFCD00*/
+	background-color: Gainsboro; /* #FFCD00*/
 	font-size: 2em;
 }
 
-.container {
- outline:0;
+.topSection {
+	background-color: white;
+	padding-bottom: 100px;
+}
+
+.playerLine {
+	color: #5cb85c;
+}
+
+.wholePage {
+	outline:0;
 }
 
 .glow {
-	box-shadow: 0 0 35px blue;
+	
 }
 
 .stage {
-	background-color: #66A3D2;
 	padding: 15px 0 0 0;
 	height: 470px;
 }
@@ -27,12 +34,12 @@ body {
 }
 
 .settings-panel {
-	background-color: beige;
-	padding: 15px 0 30px 0;
+	padding-top:15px;
+	
 }
 
 .characterBtn  button {
-	margin-left: 5px;
+	margin-right: 6px;
 }
 
 
@@ -55,8 +62,4 @@ body {
 
 .restartBtn {
 	margin-top:5px;
-}
-
-.characterSelectBox {
-	margin-right: 15px;
 }
