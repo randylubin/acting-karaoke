@@ -252,7 +252,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 				webrtc.createRoom(val, function (err, name) {
 					console.log(' create room cb', arguments);
 				
-					var newUrl = location.pathname + '?' + name + '#';
+					var newUrl = location.pathname + '?' + name + '#/';
 					if (!err) {
 						history.replaceState({foo: 'bar'}, null, newUrl);
 						setRoom(name);
