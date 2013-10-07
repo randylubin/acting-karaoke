@@ -143,8 +143,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', 'angularFire',
 
 		$scope.whosOnFirst.script = [
 			{charID: 0, line: 'I love baseball. When we get to St. Louis, will you tell me the guys\' names on the team so when I go to see them in that St. Louis ballpark I\'ll be able to know those fellows?'},
-			{charID: 1, line: 'All right. But you know, strange as it may seem, they give ball players nowaday'},
-			{charID: 1, line: 'very peculiar names'},
+			{charID: 1, line: 'All right. But you know, strange as it may seem, they give ball players nowaday very peculiar names'},
 			{charID: 0, line: 'Funny names'},
 			{charID: 1, line: 'Nicknames, pet names. Now, on the St. Louis team we have Who\'s on first,'},
 			{charID: 1, line: 'What\'s on second, I Don\'t Know is on third--'},
