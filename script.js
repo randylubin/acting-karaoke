@@ -16,6 +16,7 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 
 		$scope.pulpFiction = {};
 		$scope.whosOnFirst = {};
+		$scope.aFewGoodMen = {};
 
 		$scope.player2 = {};
 		$scope.fin = false;
@@ -149,6 +150,52 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 
 		// Scripts
 
+		$scope.aFewGoodMen.characterList = [
+			{charID: 0, name: 'Kaffee'},
+			{charID: 1, name: 'Col. Jessep'}
+		];
+
+		$scope.aFewGoodMen.script = [
+			{charID: 0, line: 'Colonel, I have just one more question before I call Airman O\'Malley and Airman Perez:'},
+			{charID: 0, line: 'If you gave an order that Santiago wasn\'t to be touched, and your orders are always followed, then why would he be in danger, why would it be necessary to transfer him off the base?'},
+			{charID: 1, line: 'Private Santiago was a sub-standard marine. He was being transferred off the base because --'},
+			{charID: 0, line: 'But that\'s not what you said. You said he was being transferred because he was in grave danger.'},
+			{charID: 1, line: 'Yes. That\'s correct, but --'},
+			{charID: 0, line: 'You said, \"He was in danger\". I said, \"Grave danger\". You said --'},
+			{charID: 1, line: 'Yes, I recall what --'},
+			{charID: 0, line: 'I can have the Court Reporter read back your --'},
+			{charID: 1, line: 'I know what I said. I don\'t need it read back to me like I\'m a damn --'},
+			{charID: 0, line: 'Then why the two orders? Colonel? Why did you --'},
+			{charID: 1, line: 'Sometimes men take matters into their own hands.'},
+			{charID: 0, line: 'No sir. You made it clear just a moment ago that your men never take matters into their own hands.'},
+			{charID: 0, line: 'Your men follow orders or people die. So Santiago shouldn\'t have been in any danger at all, should he have, Colonel?'},
+			{charID: 1, line: 'You little bastard.'},
+			{charID: 0, line: 'If Kendrick told his men that Santiago wasn\'t to be touched, then why did he have to be transferred?'},
+			{charID: 0, line: 'Colonel?'},
+			{charID: 0, line: 'Kendrick ordered the code red, didn\'t he? Because that\'s what you told Kendrick to do.'},
+			{charID: 0, line: 'And when it went bad, you cut these guys loose.'},
+			{charID: 0, line: 'You had Markinson sign a phony transfer order --'},
+			{charID: 0, line: 'You doctored the log books.'},
+			{charID: 0, line: 'I\'ll ask for the forth time. You ordered --'},
+			{charID: 1, line: 'You want answers?'},
+			{charID: 0, line: 'I think I\'m entitled to them.'},
+			{charID: 1, line: 'You want answers?!'},
+			{charID: 0, line: 'I want the truth.'},
+			{charID: 1, line: 'You can\'t handle the truth!'},
+			{charID: 1, line: 'Son, we live in a world that has walls. And those walls have to be guarded by men with guns. Who\'s gonna do it? You? You, Lt. Weinberg?'},
+			{charID: 1, line: 'I have a greater responsibility than you can possibly fathom. You weep for Santiago and you curse the marines. You have that luxury.'},
+			{charID: 1, line: 'You have the luxury of not knowing what I know: That Santiago\'s death, while tragic, probably saved lives. And my existence, while grotesque and incomprehensible to you, saves lives.'},
+			{charID: 1, line: 'You don\'t want the truth. Because deep down, in places you don\'t talk about at parties, you want me on that wall. You need me there.'},
+			{charID: 1, line: 'We use words like honor, code, loyalty... we use these words as the backbone to a life spent defending something. You use \'em as a punchline.'},
+			{charID: 1, line: 'I have neither the time nor the inclination to explain myself to a man who rises and sleeps under the blanket of the very freedom I provide, then questions the manner in which I provide it.'},
+			{charID: 1, line: 'I\'d prefer you just said thank you and went on your way. Otherwise, I suggest you pick up a weapon and stand a post.'},
+			{charID: 1, line: 'Either way, I don\'t give a damn what you think you\'re entitled to.'},
+			{charID: 0, line: 'Did you order the code red?'},
+			{charID: 1, line: 'I did the job you sent me to do.'},
+			{charID: 0, line: 'Did you order the code red?'},
+			{charID: 1, line: 'You\'re goddamn right I did.'}
+		];
+
 		$scope.pulpFiction.characterList = [
 			{charID: 0, name: 'Jules'},
 			{charID: 1, name: 'Vincent'}
@@ -226,7 +273,8 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 
 		$scope.sceneLibrary = [
 			{sceneID: 0, name: 'Who\'s on First', characterList: $scope.whosOnFirst.characterList, script: $scope.whosOnFirst.script},
-			{sceneID: 1, name: 'Pulp Fiction', characterList: $scope.pulpFiction.characterList, script: $scope.pulpFiction.script}
+			{sceneID: 1, name: 'Pulp Fiction', characterList: $scope.pulpFiction.characterList, script: $scope.pulpFiction.script},
+			{sceneID: 2, name: 'A Few Good Men', characterList: $scope.aFewGoodMen.characterList, script: $scope.aFewGoodMen.script}
 		];
 
 
