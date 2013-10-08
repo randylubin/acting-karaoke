@@ -47,13 +47,17 @@ body {
 	padding: 30px 30px 20px 30px;
 }
 
+.mainLine {
+	font-size: 1.1em;
+}
+
 #remotes video {
-	height: 300px;
+	width: 100%;
 	float: right;
 }
 
 #localVideo {
-	height: 300px;
+	width: 100%;
 }
 
 .sceneList button {

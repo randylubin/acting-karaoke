@@ -17,10 +17,12 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 		$scope.pulpFiction = {};
 		$scope.whosOnFirst = {};
 
+		$scope.player2 = {};
 		$scope.fin = false;
 
 		$scope.playerData = {
-			charID: null,
+			charID: -1,
+			charName: null,
 			message: {
 				left: '',
 				center: 'Please Pick a Character'
@@ -28,20 +30,21 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 		};
 
 		$scope.sceneInfo = {
-			players: [
-				{charID: 0, name: 'Jules', line: 'They don\'t call it a Quarter Pounder with Cheese?'},
-				{charID: 1, name: 'Vincent', line:''}
+			characterList: [
+				{charID: 0, name: 'Lou'},
+				{charID: 1, name: 'Bud'}
 			],
-			availableCharacters: [
-				{charID: 0, name: 'Jules'},
-				{charID: 1, name: 'Vincent'}
+			characterActorMap: [
+				{charID: 0, free: true},
+				{charID: 1, free: true}
 			]
 		};
 
 		$scope.sceneSync = {
 			currentLine: 0,
 			currentScene: 0,
-			availableCharacters: $scope.sceneInfo.availableCharacters
+			characterList: $scope.sceneInfo.characterList,
+			characterActorMap: $scope.sceneInfo.characterActorMap
 		};
 
 		$scope.script = [
@@ -61,22 +64,42 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 		];
 
 		$scope.pickScene = function(sceneID){
+			$scope.clearCharacter();
+			$scope.sceneSync.fin = false;
 			$scope.sceneSync.currentLine = 0;
 			$scope.sceneSync.currentScene = sceneID;
+			$scope.sceneSync.characterActorMap = [
+				{charID: 0, free: true},
+				{charID: 1, free: true}
+			];
 			console.log('New scene:', $scope.sceneLibrary[sceneID].name);
 		};
 
 		$scope.pickCharacter = function(character){
 			console.log("Selected", character.name);
 
-			$scope.playerData.charID = character.charID;
-			$scope.playerData.charName = character.name;
+			if (character) {
+				//erase old character info
+				$scope.clearCharacter();
+
+				//add new info
+				$scope.playerData.charID = character.charID;
+				$scope.playerData.charName = character.name;
+				$scope.sceneSync.characterActorMap[character.charID].free = false;
+			} else {
+				$scope.clearCharacter();
+			}
 
 		};
 
 		$scope.clearCharacter = function(){
-			$scope.playerData.charID = null;
-			$scope.playerData.charName = null;
+			console.log('clearing character');
+			if($scope.playerData.charID >= 0){
+				console.log($scope.playerData.charID);
+				$scope.sceneSync.characterActorMap[$scope.playerData.charID].free = true;
+				$scope.playerData.charID = -1;
+				$scope.playerData.charName = '';
+			}
 		};
 
 		$scope.nextLine = function(){
@@ -115,14 +138,18 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 				console.log('updated defaults');
 				$scope.sceneSync.currentLine = 0;
 				$scope.sceneSync.currentScene = 0;
-				$scope.sceneSync.availableCharacters = $scope.sceneInfo.availableCharacters;
+				$scope.sceneSync.characterList = $scope.sceneInfo.characterList;
+				$scope.sceneSync.characterActorMap = [
+					{charID: 0, free: true},
+					{charID: 1, free: true}
+				];
 			//}
 		});
 
 
 		// Scripts
 
-		$scope.pulpFiction.availableCharacters = [
+		$scope.pulpFiction.characterList = [
 			{charID: 0, name: 'Jules'},
 			{charID: 1, name: 'Vincent'}
 		];
@@ -192,14 +219,14 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 			{charID: 1, line: 'Oh, no, no, What is on second base.'}
 		];
 
-		$scope.whosOnFirst.availableCharacters = [
+		$scope.whosOnFirst.characterList = [
 			{charID: 0, name: 'Lou'},
 			{charID: 1, name: 'Bud'}
 		];
 
 		$scope.sceneLibrary = [
-			{sceneID: 0, name: 'Who\'s on First', availableCharacters: $scope.whosOnFirst.availableCharacters, script: $scope.whosOnFirst.script},
-			{sceneID: 1, name: 'Pulp Fiction', availableCharacters: $scope.pulpFiction.availableCharacters, script: $scope.pulpFiction.script}
+			{sceneID: 0, name: 'Who\'s on First', characterList: $scope.whosOnFirst.characterList, script: $scope.whosOnFirst.script},
+			{sceneID: 1, name: 'Pulp Fiction', characterList: $scope.pulpFiction.characterList, script: $scope.pulpFiction.script}
 		];
 
 

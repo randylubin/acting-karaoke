@@ -21,7 +21,7 @@
 								<em>No Character Selected</em>
 							</div>
 							<div ng-show="playerData.charID != null">
-								<div class="playerLine" ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID == playerData.charID"> {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].line}} </div>
+								<div class="playerLine mainLine" ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID == playerData.charID"> {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].line}} </div>
 								<div ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID != playerData.charID"> (Other player's line) </div>
 								<div ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID != playerData.charID">
 									<small class="playerLine" ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine + 1].charID == playerData.charID">Next: {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine + 1].line}}</small>
@@ -39,12 +39,17 @@
 					</div>
 				</div>
 
-
+				<!-- Videos and Name Tags -->
 				<div class="row videoTray">
 					<div class="col-xs-6">
 						<video id="localVideo"></video>
+						<div class="text-center playerLine">{{playerData.charName}}</div>
 					</div>
-			    	<div id="remotes" class="col-xs-6"></div>
+			    	<div class="col-xs-6">
+			    		<div id="remotes"></div>
+			    		<div class="text-center">{{player2.charName}}</div>
+			    		<div class="text-center" ng-hide="(character.charID == playerData.charID) || character.free" ng-repeat="character in sceneSync.characterActorMap"}}>{{sceneLibrary[sceneSync.currentScene].characterList[character.charID].name}}</div>
+			    	</div>
 				</div>
 			</div>
 		</div>
@@ -66,8 +71,8 @@
 						
 					</div>
 					<div class="row characterBtn">
-						<button type="button" class="btn btn-success" ng-click="pickCharacter(character)" ng-disabled="playerData.charID == character.charID" ng-repeat="character in sceneLibrary[sceneSync.currentScene].availableCharacters">{{character.name}}</button>
-						<button type="button" class="btn btn-success" ng-click="clearCharacter()" ng-disabled="playerData.charID == null">None</button>
+						<button type="button" class="btn btn-success" ng-click="pickCharacter(character)" ng-disabled="!sceneSync.characterActorMap[character.charID].free" ng-repeat="character in sceneLibrary[sceneSync.currentScene].characterList">{{character.name}}</button>
+						<button type="button" class="btn btn-success" ng-click="clearCharacter()" ng-disabled="playerData.charID == -1">None</button>
 						<button type="button" class="btn btn-success restartBtn" ng-click="restartScene()" ng-disabled="sceneSync.currentLine == 0">Restart Scene</button>
 					</div>
 				</div>
