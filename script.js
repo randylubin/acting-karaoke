@@ -118,7 +118,9 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 		$scope.hitKey = function($event){
 			console.log('hit key');
 			if ($event.keyCode == 37){
-				$scope.sceneSync.currentLine -= 1;
+				if ($scope.sceneSync.currentLine !== 0) $scope.sceneSync.currentLine -= 1;
+			} else if ($event.keyCode == 38) {
+				$scope.restartScene();
 			} else {
 				$scope.nextLine();
 			}
