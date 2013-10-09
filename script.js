@@ -19,7 +19,6 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 		$scope.aFewGoodMen = {};
 
 		$scope.player2 = {};
-		$scope.fin = false;
 
 		$scope.playerData = {
 			charID: -1,
@@ -45,7 +44,8 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 			currentLine: 0,
 			currentScene: 0,
 			characterList: $scope.sceneInfo.characterList,
-			characterActorMap: $scope.sceneInfo.characterActorMap
+			characterActorMap: $scope.sceneInfo.characterActorMap,
+			fin: false
 		};
 
 		$scope.script = [
@@ -110,19 +110,23 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 			if (($scope.sceneSync.currentLine + 1) < $scope.sceneLibrary[$scope.sceneSync.currentScene].script.length) {
 				$scope.sceneSync.currentLine += 1;
 			} else {
-				$scope.fin = true;
+				$scope.sceneSync.fin = true;
 			}
 
 		};
 
 		$scope.hitKey = function($event){
 			console.log('hit key');
-			$scope.nextLine();
+			if ($event.keyCode == 37){
+				$scope.sceneSync.currentLine -= 1;
+			} else {
+				$scope.nextLine();
+			}
 		};
 
 		$scope.restartScene = function(){
 			$scope.sceneSync.currentLine = 0;
-			$scope.fin = false;
+			$scope.sceneSync.fin = false;
 		};
 
 
@@ -158,14 +162,14 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 		$scope.aFewGoodMen.script = [
 			{charID: 0, line: 'Colonel, I have just one more question before I call Airman O\'Malley and Airman Perez:'},
 			{charID: 0, line: 'If you gave an order that Santiago wasn\'t to be touched, and your orders are always followed, then why would he be in danger, why would it be necessary to transfer him off the base?'},
-			{charID: 1, line: 'Private Santiago was a sub-standard marine. He was being transferred off the base because --'},
+			{charID: 1, line: 'Private Santiago was a sub-standard marine. He was being transferred off the base because -'},
 			{charID: 0, line: 'But that\'s not what you said. You said he was being transferred because he was in grave danger.'},
-			{charID: 1, line: 'Yes. That\'s correct, but --'},
-			{charID: 0, line: 'You said, \"He was in danger\". I said, \"Grave danger\". You said --'},
+			{charID: 1, line: 'Yes. That\'s correct, but -'},
+			{charID: 0, line: 'You said, \"He was in danger\". I said, \"Grave danger\". You said -'},
 			{charID: 1, line: 'Yes, I recall what --'},
-			{charID: 0, line: 'I can have the Court Reporter read back your --'},
-			{charID: 1, line: 'I know what I said. I don\'t need it read back to me like I\'m a damn --'},
-			{charID: 0, line: 'Then why the two orders? Colonel? Why did you --'},
+			{charID: 0, line: 'I can have the Court Reporter read back your -'},
+			{charID: 1, line: 'I know what I said. I don\'t need it read back to me like I\'m a damn -'},
+			{charID: 0, line: 'Then why the two orders? Colonel? Why did you -'},
 			{charID: 1, line: 'Sometimes men take matters into their own hands.'},
 			{charID: 0, line: 'No sir. You made it clear just a moment ago that your men never take matters into their own hands.'},
 			{charID: 0, line: 'Your men follow orders or people die. So Santiago shouldn\'t have been in any danger at all, should he have, Colonel?'},
@@ -174,9 +178,9 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 			{charID: 0, line: 'Colonel?'},
 			{charID: 0, line: 'Kendrick ordered the code red, didn\'t he? Because that\'s what you told Kendrick to do.'},
 			{charID: 0, line: 'And when it went bad, you cut these guys loose.'},
-			{charID: 0, line: 'You had Markinson sign a phony transfer order --'},
+			{charID: 0, line: 'You had Markinson sign a phony transfer order -'},
 			{charID: 0, line: 'You doctored the log books.'},
-			{charID: 0, line: 'I\'ll ask for the forth time. You ordered --'},
+			{charID: 0, line: 'I\'ll ask for the forth time. You ordered -'},
 			{charID: 1, line: 'You want answers?'},
 			{charID: 0, line: 'I think I\'m entitled to them.'},
 			{charID: 1, line: 'You want answers?!'},
@@ -221,10 +225,9 @@ actorKaraoke.controller('SceneCtrl', ['$scope', '$routeParams', 'angularFire',
 			{charID: 0, line: 'I love baseball. When we get to St. Louis, will you tell me the guys\' names on the team so when I go to see them in that St. Louis ballpark I\'ll be able to know those fellows?'},
 			{charID: 1, line: 'All right. But you know, strange as it may seem, they give ball players nowaday very peculiar names'},
 			{charID: 0, line: 'Funny names'},
-			{charID: 1, line: 'Nicknames, pet names. Now, on the St. Louis team we have Who\'s on first,'},
-			{charID: 1, line: 'What\'s on second, I Don\'t Know is on third--'},
-			{charID: 0, line: 'That\'s what I want to find out; I want you to tell me the names of the fellow'},
-			{charID: 0, line: 'on the St. Louis team.'},
+			{charID: 1, line: 'Nicknames, pet names. Now, on the St. Louis team we have:'},
+			{charID: 1, line: 'Who\'s on first, What\'s on second, I Don\'t Know is on third--'},
+			{charID: 0, line: 'That\'s what I want to find out; I want you to tell me the names of the fellow on the St. Louis team.'},
 			{charID: 1, line: 'I\'m telling you: Who\'s on first, What\'s on second, I Don\'t Know is on third.'},
 			{charID: 0, line: 'You know the fellows\' names?'},
 			{charID: 1, line: 'Yes.'},

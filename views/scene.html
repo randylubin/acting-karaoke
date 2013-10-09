@@ -1,4 +1,4 @@
-<div class="wholePage" tabindex="0" ui-keyup="{'enter':'hitKey($event)'}">
+<div class="wholePage" tabindex="0" ui-keyup="{'enter 37 32 39':'hitKey($event)'}">
 	<div class="topSection">
 		<div class="container">		
 
@@ -15,26 +15,29 @@
 					</div>
 
 					<!-- Center -->
-					<div ng-hide="fin">
+					<div ng-hide="sceneSync.fin">
 						<div class="text-center col-xs-8">
-							<div ng-hide="playerData.charID != null">
+							<div ng-hide="playerData.charID != -1">
 								<em>No Character Selected</em>
 							</div>
-							<div ng-show="playerData.charID != null">
+							<div ng-show="playerData.charID != -1">
 								<div class="playerLine mainLine" ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID == playerData.charID"> {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].line}} </div>
 								<div ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID != playerData.charID"> (Other player's line) </div>
 								<div ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID != playerData.charID">
 									<small class="playerLine" ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine + 1].charID == playerData.charID">Next: {{sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine + 1].line}}</small>
 								</div>
+								<div ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID == playerData.charID">
+									<small class="playerLine" ng-show="sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine + 1].charID == playerData.charID">(continue)</small>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div ng-show="fin" class="text-center col-xs-8">Well done! Pick a new scene below...</div>
+					<div ng-hide="!sceneSync.fin" class="text-center col-xs-8">Well done! Pick a new scene below...</div>
 
 					<!-- Right -->
 					<div ng-show="playerData.charID != null">
 						<div class="col-xs-2">
-							<button type="button" class="btn-lg" ng-class="{true:'btn-success', false:'btn-default glow'}[sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID == playerData.charID]" ng-click="nextLine()" ng-hide="fin">Next Line</button>
+							<button type="button" class="btn-lg" ng-class="{true:'btn-success', false:'btn-default glow'}[sceneLibrary[sceneSync.currentScene].script[sceneSync.currentLine].charID == playerData.charID]" ng-click="nextLine()" ng-hide="sceneSync.fin">Next Line</button>
 						</div>
 					</div>
 				</div>
