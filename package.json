@@ -1,12 +1,12 @@
 {
-  "name": "simplewebrtc",
-  "version": "1.1.0",
+  "name": "acting-karaoke",
+  "version": "1.0.0",
   "repository": {
     "type": "git", 
-    "url": "git@github.com:henrikjoreteg/SimpleWebRTC.git"
+    "url": "git@github.com:randylubin/acting-karaoke.git"
   },
-  "main": "./simplewebrtc.js",
-  "description": "World's easiest webrtc",
+  "main": "./server.js",
+  "description": "Like karaoke but for acting",
   "dependencies": {
     "webrtcsupport": "0.7.0",
     "wildemitter": "0.0.5",
